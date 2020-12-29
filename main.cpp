@@ -172,7 +172,7 @@ void editorAppendRow(char *s, size_t len){
 	E.row[at].size = len;
 	E.row[at].chars = static_cast<char*>(malloc(len + 1));
 	memcpy(E.row[at].chars, s, len);
-	E.row[at].chars[len] = '\0';
+	E.row[at].chars[len] = '\n';
 	E.numrows++;
 }
 
@@ -204,9 +204,8 @@ struct abuf {
 
 void abAppend(struct abuf *ab, const char *s, int len) {
 	char *additional = static_cast<char*>(realloc(ab->b, ab->len + len));
-
 	if(additional == NULL) return;
-	memcpy(&additional[ab->len], s, len);
+	memcpy(&additional[ab->len], s, len + 1);
 	ab->b = additional;
 	ab->len += len;
 }
@@ -341,6 +340,7 @@ void initEditor() {
 }
 
 int main(int argc, char *argv[]) {
+	freopen("error.txt", "w", stderr);
 	enableRawMode();
 	initEditor();
 	
