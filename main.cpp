@@ -172,7 +172,7 @@ void editorAppendRow(char *s, size_t len){
 	E.row[at].size = len;
 	E.row[at].chars = static_cast<char*>(malloc(len + 1));
 	memcpy(E.row[at].chars, s, len);
-	E.row[at].chars[len] = '\n';
+	E.row[at].chars[len] = '\0';
 	E.numrows++;
 }
 
@@ -203,7 +203,7 @@ struct abuf {
 #define ABUF_INIT {NULL, 0};
 
 void abAppend(struct abuf *ab, const char *s, int len) {
-	char *additional = static_cast<char*>(realloc(ab->b, ab->len + len));
+	char *additional = static_cast<char*>(realloc(ab->b, ab->len + len + 1));
 	if(additional == NULL) return;
 	memcpy(&additional[ab->len], s, len + 1);
 	ab->b = additional;
